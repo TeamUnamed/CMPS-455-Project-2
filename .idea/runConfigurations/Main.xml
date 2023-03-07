@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="net.cmps455.unamed.project2.Main" />
+    <module name="CMPS-455-Project-2" />
+    <selectedOptions>
+      <option name="environmentVariables" visible="false" />
+    </selectedOptions>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
