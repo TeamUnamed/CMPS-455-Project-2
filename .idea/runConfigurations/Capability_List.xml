@@ -1,7 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Main" type="Application" factoryName="Application">
+  <configuration default="false" name="Capability List" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="net.cmps455.unamed.project2.Main" />
     <module name="CMPS-455-Project-2" />
+    <option name="PROGRAM_PARAMETERS" value="-S 3" />
     <selectedOptions>
       <option name="environmentVariables" visible="false" />
     </selectedOptions>
