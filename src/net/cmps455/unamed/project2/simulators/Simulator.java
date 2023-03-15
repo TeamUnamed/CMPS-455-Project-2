@@ -1,4 +1,4 @@
-package net.cmps455.unamed.project2.util;
+package net.cmps455.unamed.project2.simulators;
 
 /**
  *  <p>Parent class for all Simulators.
@@ -9,5 +9,5 @@ public abstract class Simulator extends Thread {
     /**
      * Start the simulation.
      */
-    public abstract void start();
+    public abstract void startSimulation();
 }
