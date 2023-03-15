@@ -1,4 +1,4 @@
-package util;
+package net.cmps455.unamed.project2.util;
 
 /**
  *  <p>Parent class for all Simulators.
