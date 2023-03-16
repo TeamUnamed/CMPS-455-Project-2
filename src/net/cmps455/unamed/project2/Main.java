@@ -1,5 +1,8 @@
 package net.cmps455.unamed.project2;
 
+import net.cmps455.unamed.project2.simulators.CapabilityListSimulator;
+import net.cmps455.unamed.project2.simulators.Simulator;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -36,22 +39,24 @@ public class Main {
         }
         /* -------- */
 
+        Simulator simulator = null;
+        
         /* Simulation Index Checking */
         switch (simulationIndex) {
-            case 1 -> System.out.println("TEMP -> STARTING SIMULATION 1");
-            case 2 -> System.out.println("TEMP -> STARTING SIMULATION 2");
-            case 3 -> System.out.println("TEMP -> STARTING SIMULATION 3");
+            case 1 -> System.out.println("TEMP -> STARTING SIMULATOR 1");
+            case 2 -> System.out.println("TEMP -> STARTING SIMULATOR 2");
+            case 3 -> simulator = new CapabilityListSimulator();
             default -> { // return on invalid simulation
-                System.out.println("ERROR: Invalid Simulation (SIMULATION " + simulationIndex + ")");
+                System.out.println("ERROR: Invalid Simulator (SIMULATION " + simulationIndex + ")");
                 return;
             }
         }
         /* -------- */
 
-        System.out.println("Simulation " + simulationIndex + " selected!");
+        System.out.println("Simulator " + simulationIndex + " selected!");
         System.out.println();
 
-        // TODO: Start Simulation
+        simulator.start();
 
         System.out.println();
         System.out.println("Simulation has ended!");
