@@ -4,7 +4,7 @@ import net.cmps455.unamed.project2.AccessLocked;
 
 public class Domain extends Thread implements AccessLocked {
 
-    private String name;
+    private final String name;
 
     public Domain(String name) {
         this.name = name;
