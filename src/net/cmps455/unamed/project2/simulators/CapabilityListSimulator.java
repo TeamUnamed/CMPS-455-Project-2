@@ -77,9 +77,9 @@ public class CapabilityListSimulator extends Simulator {
 
     private static class DummyObject implements VirtualObject {
 
-        public final String id;
+        public final int id;
 
-        DummyObject (String id) {
+        DummyObject (int id) {
             this.id = id;
         }
 
@@ -93,11 +93,11 @@ public class CapabilityListSimulator extends Simulator {
 
         @Override
         public String toString() {
-            return getID();
+            return "F" + id;
         }
 
         @Override
-        public String getID() {
+        public int getID() {
             return id;
         }
     }

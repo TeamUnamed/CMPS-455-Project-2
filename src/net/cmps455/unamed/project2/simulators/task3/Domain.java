@@ -15,18 +15,13 @@ public class Domain extends Thread implements VirtualDomain {
     }
 
     @Override
-    public boolean isDomain() {
-        return true;
-    }
-
-    @Override
-    public String getID() {
+    public int getID() {
         return id;
     }
 
     @Override
     public String toString() {
-        return getID();
+        return "D" + getID();
     }
 
     @Override
@@ -39,14 +34,14 @@ public class Domain extends Thread implements VirtualDomain {
             } while (choice.equals(this));
 
             if (choice.isDomain()) {
-                System.out.printf("[%1$s] Attempting to switch from %1$s to %2$s%n", id, choice.getID());
+                System.out.printf("[%1$s] Attempting to switch from %1$s to %2$s%n", this, choice.getID());
             } else {
-                Capability.Permission access = Capability.Permission.fromValue(random.nextInt(2) + 1);
-                System.out.printf("[%1$s] Attempting to %3$s %2$s%n", id, choice.getID(), access.text);
+                int flag = random.nextInt(2) + 1;
+                System.out.printf("[%1$s] Attempting to %3$s %2$s%n", this, choice.getID(), Integer.toString(flag,2));
             }
 
             int yieldCount = random.nextInt(5) + 3; // [3,7]
-            System.out.printf("[%s] Yielding %d times.%n", id, yieldCount);
+            System.out.printf("[%s] Yielding %d times.%n", this, yieldCount);
             for (int i = 0; i < yieldCount; i++) {
                 Thread.yield();
             }
@@ -55,9 +50,9 @@ public class Domain extends Thread implements VirtualDomain {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Domain)
-            return this.getID().equals(((Domain) o).getID());
+        if (!(o instanceof Domain))
+            return false;
 
-        return false;
+        return this.id == ((Domain) o).id;
     }
 }

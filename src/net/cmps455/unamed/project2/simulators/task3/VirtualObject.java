@@ -5,5 +5,5 @@ public interface VirtualObject {
         return false;
     }
 
-    String getID();
+    int getID();
 }
