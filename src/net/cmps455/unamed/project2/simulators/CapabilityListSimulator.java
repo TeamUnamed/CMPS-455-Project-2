@@ -50,16 +50,16 @@ public class CapabilityListSimulator extends Simulator {
             capabilityLists[i] = new CapabilityList((VirtualDomain) objects[i + objectCount]);
 
             for (int j = 0; j < domainCount + objectCount; j++) {
-                int value = random.nextInt(4); // [0,3]
+                int flag = random.nextInt(4); // [0,3]
 
                 VirtualObject object = objects[j];
                 if (object.isDomain())
-                    value = (value / 2) * 4; // [0,3] -> [0,1] -> 0 or 4
+                    flag = (flag / 2) * 4; // [0,3] -> [0,1] -> 0 or 4
 
-                capabilityLists[i].add(new Capability(objects[j], Capability.Permission.fromValue(value)));
+                capabilityLists[i].add(Capability.create(objects[i],flag));
             }
 
-            System.out.printf("%s :: %s\n", objects[i + objectCount], capabilityLists[i]);
+            System.out.println(capabilityLists[i]);
         }
 
         for (int i = 0; i < domainCount; i++) {

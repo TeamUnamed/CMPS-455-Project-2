@@ -1,54 +1,39 @@
 package net.cmps455.unamed.project2.simulators.task3;
 
-import net.cmps455.unamed.project2.VirtualObject;
-
-public class Capability {
+public final class Capability {
 
     public final VirtualObject object;
-    public final Permission permission;
+    public final int flag;
 
-    public Capability(VirtualObject object, Permission permission) {
+    private Capability(VirtualObject object, int flag) {
         this.object = object;
-        this.permission = permission;
+        this.flag = flag;
+    }
+
+    public boolean has(int flag) {
+        return (this.flag & flag) == flag;
     }
 
     @Override
     public String toString() {
-        return String.format("%s, %s", object, permission);
+        return String.format("%s:%s", object, Integer.toString(flag,2));
     }
 
-    public enum Permission {
+    public static final int NONE        = 0b0000;
+    public static final int READ        = 0b0001;
+    public static final int WRITE       = 0b0010;
+    public static final int READ_WRITE  = 0b0011;
+    public static final int SWITCH      = 0b0100;
 
-        NONE      (0b000,""),
-        READ      (0b001,"read"),
-        WRITE     (0b010,"write"),
-        READWRITE (0b011,"read/write"),
-        SWITCH    (0b100,"switch");
+    public static Capability create(VirtualObject object, int ... flags) {
+        if (flags.length == 0) return new Capability(object, 0);
+        if (flags.length == 1) return new Capability(object, flags[0]);
 
-        public final int value;
-        public final String text;
-        Permission(int value, String text) {
-            this.value = value;
-            this.text = text;
+        int flag = 0;
+        for (int f : flags) {
+            flag ^= f;
         }
 
-        public boolean contains (Permission other) {
-            return (this.value & other.value) == other.value;
-        }
-
-        public static Permission fromValue(int value) {
-            return switch (value) {
-                case 1 -> READ;
-                case 2 -> WRITE;
-                case 3 -> READWRITE;
-                case 4 -> SWITCH;
-                default -> NONE;
-            };
-        }
-
-        @Override
-        public String toString() {
-            return this.text;
-        }
+        return new Capability(object, flag);
     }
 }

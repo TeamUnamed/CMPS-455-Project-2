@@ -14,7 +14,8 @@ public class CapabilityList extends LinkedList<Capability> {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        this.forEach(capability -> stringBuilder.append(String.format("[%-15s] → ",capability)));
+        stringBuilder.append(String.format("%s :: ", domain));
+        this.forEach(capability -> stringBuilder.append(String.format("[%s] → ",capability)));
         stringBuilder.append("<NULL>");
         return stringBuilder.toString();
     }
