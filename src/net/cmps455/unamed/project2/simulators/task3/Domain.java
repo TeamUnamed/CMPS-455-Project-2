@@ -1,10 +1,8 @@
 package net.cmps455.unamed.project2.simulators.task3;
 
-import net.cmps455.unamed.project2.VirtualObject;
-
 import java.util.Random;
 
-public class Domain extends Thread implements VirtualObject {
+public class Domain extends Thread implements VirtualDomain {
 
     private final VirtualObject[] objects;
     private final int id;

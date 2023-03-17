@@ -47,7 +47,7 @@ public class CapabilityListSimulator extends Simulator {
 
         // Generate and fill Capability Lists
         for (int i = 0; i < domainCount; i++) {
-            capabilityLists[i] = new CapabilityList();
+            capabilityLists[i] = new CapabilityList((VirtualDomain) objects[i + objectCount]);
 
             for (int j = 0; j < domainCount + objectCount; j++) {
                 int value = random.nextInt(4); // [0,3]
