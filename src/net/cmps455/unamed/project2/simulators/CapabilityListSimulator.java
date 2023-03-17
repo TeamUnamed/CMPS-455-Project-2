@@ -1,35 +1,34 @@
 package net.cmps455.unamed.project2.simulators;
 
-import net.cmps455.unamed.project2.VirtualObject;
-import net.cmps455.unamed.project2.simulators.task3.Capability;
-import net.cmps455.unamed.project2.simulators.task3.CapabilityList;
-import net.cmps455.unamed.project2.simulators.task3.Domain;
+import net.cmps455.unamed.project2.simulators.task3.VirtualObject;
+import net.cmps455.unamed.project2.simulators.task3.*;
 
 import java.util.Random;
 
 public class CapabilityListSimulator extends Simulator {
 
-    private CapabilityList[] capabilityLists;
-    private VirtualObject[] objects;
-
-    private int domainCount = 0;
-    private int objectCount = 0;
     @Override
     public void start() {
         Random random = new Random();
 
+        int domainCount = 3 + random.nextInt(5); // [3,7]
+        int objectCount = 3 + random.nextInt(5); // [3,7]
+
         // Generate Domains & Objects
-        domainCount = 3 + random.nextInt(5); // [3,7]
-        objectCount = 3 + random.nextInt(5); // [3,7]
         System.out.println("Access control scheme: Capability List");
         System.out.println("Creating: ");
         System.out.printf("| %d Domains\n", domainCount);
         System.out.printf("| %d Objects\n", objectCount);
         System.out.println();
 
+        /* Setup */
+
         // Create Array of LinkedLists
         // CapabilityList inherits from LinkedList
-        capabilityLists = new CapabilityList[domainCount];
+        CapabilityList[] capabilityLists = new CapabilityList[domainCount];
+
+        // Create array to store Domains & Files
+        VirtualObject[] objects = new VirtualObject[domainCount + objectCount];
 
         // Create Arbitrator and give a pointer to Capabilities
         Arbitrator arbitrator = new Arbitrator(capabilityLists);
@@ -37,7 +36,7 @@ public class CapabilityListSimulator extends Simulator {
 
         // Generate Objects
         for (int i = 0; i < objectCount; i++) {
-            objects[i] = new DummyObject("F" + (i+1));
+            objects[i] = new DummyObject(i+1);
         }
 
         // Generate Domains
@@ -61,6 +60,8 @@ public class CapabilityListSimulator extends Simulator {
 
             System.out.println(capabilityLists[i]);
         }
+
+        /* Simulation */
 
         for (int i = 0; i < domainCount; i++) {
             ((Domain) objects[i + objectCount]).start();
