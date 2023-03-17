@@ -1,8 +1,7 @@
 package net.cmps455.unamed.project2.simulators;
 
-import net.cmps455.unamed.project2.AccessLocked;
+import net.cmps455.unamed.project2.VirtualObject;
 import net.cmps455.unamed.project2.simulators.task3.Capability;
-import net.cmps455.unamed.project2.simulators.task3.Capability.Permission;
 import net.cmps455.unamed.project2.simulators.task3.CapabilityList;
 import net.cmps455.unamed.project2.simulators.task3.Domain;
 
@@ -10,9 +9,8 @@ import java.util.Random;
 
 public class CapabilityListSimulator extends Simulator {
 
-    private CapabilityList[] capabilitiesList;
-    private Domain[] domainList;
-    private DummyObject[] objectList;
+    private CapabilityList[] capabilityLists;
+    private VirtualObject[] objects;
 
     private int domainCount = 0;
     private int objectCount = 0;
@@ -23,61 +21,53 @@ public class CapabilityListSimulator extends Simulator {
         // Generate Domains & Objects
         domainCount = 3 + random.nextInt(5); // [3,7]
         objectCount = 3 + random.nextInt(5); // [3,7]
-
-        System.out.printf("Creating capability list for %d domains and %d objects.\n", domainCount, objectCount);
+        System.out.println("Access control scheme: Capability List");
+        System.out.println("Creating: ");
+        System.out.printf("| %d Domains\n", domainCount);
+        System.out.printf("| %d Objects\n", objectCount);
+        System.out.println();
 
         // Create Array of LinkedLists
         // CapabilityList inherits from LinkedList
-        capabilitiesList = new CapabilityList[domainCount];
+        capabilityLists = new CapabilityList[domainCount];
 
         // Store Domains & Objects
-        domainList = new Domain[domainCount];
-        objectList = new DummyObject[objectCount];
+        objects = new VirtualObject[domainCount + objectCount];
 
         // Generate Objects
         for (int i = 0; i < objectCount; i++) {
-            objectList[i] = new DummyObject(i + 1);
+            objects[i] = new DummyObject("F" + (i+1));
         }
 
         // Generate Domains
         for (int i = 0; i < domainCount; i++) {
-            domainList[i] = new Domain("D" + (i+1));
+            objects[i + objectCount] = new Domain("D" + (i+1), objects);
         }
 
         // Generate and fill Capability Lists
         for (int i = 0; i < domainCount; i++) {
-            capabilitiesList[i] = new CapabilityList();
+            capabilityLists[i] = new CapabilityList();
 
-            // Capabilities for Objects
-            for (int j = 0; j < objectCount; j++) {
-                int flag = random.nextInt(4);
+            for (int j = 0; j < domainCount + objectCount; j++) {
+                int value = random.nextInt(4); // [0,3]
 
-                if (flag == 0) continue;
+                VirtualObject object = objects[j];
+                if (object.isDomain())
+                    value = (value / 2) * 4; // [0,3] -> [0,1] -> 0 or 4
 
-                capabilitiesList[i].add(new Capability(objectList[j], Capability.Permission.fromValue(flag)));
+                capabilityLists[i].add(new Capability(objects[j], Capability.Permission.fromValue(value)));
             }
 
-            // Capabilities for Domains
-            for (int j = 0; j < domainCount; j++) {
-                if (j == i) continue;
-
-                int flag = random.nextInt(2) * Permission.SWITCH.value;
-
-                if (flag == 0) continue;
-
-                capabilitiesList[i].add(new Capability(domainList[j], Capability.Permission.fromValue(flag)));
-            }
-
-            System.out.printf("%s :: %s\n", domainList[i], capabilitiesList[i]);
+            System.out.printf("%s :: %s\n", objects[i + objectCount], capabilityLists[i]);
         }
 
     }
 
-    private static class DummyObject implements AccessLocked {
+    private static class DummyObject implements VirtualObject {
 
-        public final int id;
+        public final String id;
 
-        DummyObject (int id) {
+        DummyObject (String id) {
             this.id = id;
         }
 
@@ -91,7 +81,13 @@ public class CapabilityListSimulator extends Simulator {
 
         @Override
         public String toString() {
-            return "F" + id;
+            return getID();
+        }
+
+        @Override
+        public String getID() {
+            return id;
         }
     }
+
 }
