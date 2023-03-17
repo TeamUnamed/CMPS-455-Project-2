@@ -1,13 +1,13 @@
 package net.cmps455.unamed.project2.simulators.task3;
 
-import net.cmps455.unamed.project2.AccessLocked;
+import net.cmps455.unamed.project2.VirtualObject;
 
 public class Capability {
 
-    public final AccessLocked object;
+    public final VirtualObject object;
     public final Permission permission;
 
-    public Capability(AccessLocked object, Permission permission) {
+    public Capability(VirtualObject object, Permission permission) {
         this.object = object;
         this.permission = permission;
     }
