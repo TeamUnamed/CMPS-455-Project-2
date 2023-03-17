@@ -1,13 +1,17 @@
 package net.cmps455.unamed.project2.simulators.task3;
 
-import net.cmps455.unamed.project2.AccessLocked;
+import net.cmps455.unamed.project2.VirtualObject;
 
-public class Domain extends Thread implements AccessLocked {
+import java.util.Random;
 
-    private final String name;
+public class Domain extends Thread implements VirtualObject {
 
-    public Domain(String name) {
-        this.name = name;
+    private final VirtualObject[] objects;
+    private final String id;
+
+    public Domain(String id, VirtualObject[] objects) {
+        this.id = id;
+        this.objects = objects;
     }
 
     @Override
@@ -16,7 +20,44 @@ public class Domain extends Thread implements AccessLocked {
     }
 
     @Override
+    public String getID() {
+        return id;
+    }
+
+    @Override
     public String toString() {
-        return this.name;
+        return getID();
+    }
+
+    @Override
+    public void run() {
+        Random random = new Random();
+        for (int r = 0; r < 5; r++) {
+            VirtualObject choice;
+            do {
+                choice = objects[random.nextInt(objects.length)];
+            } while (choice.equals(this));
+
+            if (choice.isDomain()) {
+                System.out.printf("[%1$s] Attempting to switch from %1$s to %2$s%n", id, choice.getID());
+            } else {
+                Capability.Permission access = Capability.Permission.fromValue(random.nextInt(2) + 1);
+                System.out.printf("[%1$s] Attempting to %3$s %2$s%n", id, choice.getID(), access.text);
+            }
+
+            int yieldCount = random.nextInt(5) + 3; // [3,7]
+            System.out.printf("[%s] Yielding %d times.%n", id, yieldCount);
+            for (int i = 0; i < yieldCount; i++) {
+                Thread.yield();
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Domain)
+            return this.getID().equals(((Domain) o).getID());
+
+        return false;
     }
 }
