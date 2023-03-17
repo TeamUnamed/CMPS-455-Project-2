@@ -7,11 +7,13 @@ import java.util.Random;
 public class Domain extends Thread implements VirtualObject {
 
     private final VirtualObject[] objects;
-    private final String id;
+    private final int id;
+    private final Arbitrator arbitrator;
 
-    public Domain(String id, VirtualObject[] objects) {
+    public Domain(int id, VirtualObject[] objects, Arbitrator arbitrator) {
         this.id = id;
         this.objects = objects;
+        this.arbitrator = arbitrator;
     }
 
     @Override

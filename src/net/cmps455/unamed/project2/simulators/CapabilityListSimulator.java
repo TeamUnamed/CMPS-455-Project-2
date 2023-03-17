@@ -31,8 +31,9 @@ public class CapabilityListSimulator extends Simulator {
         // CapabilityList inherits from LinkedList
         capabilityLists = new CapabilityList[domainCount];
 
-        // Store Domains & Objects
-        objects = new VirtualObject[domainCount + objectCount];
+        // Create Arbitrator and give a pointer to Capabilities
+        Arbitrator arbitrator = new Arbitrator(capabilityLists);
+
 
         // Generate Objects
         for (int i = 0; i < objectCount; i++) {
@@ -41,7 +42,7 @@ public class CapabilityListSimulator extends Simulator {
 
         // Generate Domains
         for (int i = 0; i < domainCount; i++) {
-            objects[i + objectCount] = new Domain("D" + (i+1), objects);
+            objects[i + objectCount] = new Domain(i+1, objects, arbitrator);
         }
 
         // Generate and fill Capability Lists
