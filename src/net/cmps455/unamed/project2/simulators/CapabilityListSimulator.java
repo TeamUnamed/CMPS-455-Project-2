@@ -61,6 +61,17 @@ public class CapabilityListSimulator extends Simulator {
             System.out.printf("%s :: %s\n", objects[i + objectCount], capabilityLists[i]);
         }
 
+        for (int i = 0; i < domainCount; i++) {
+            ((Domain) objects[i + objectCount]).start();
+        }
+
+        for (int i = 0; i < domainCount; i++) {
+            try {
+                ((Domain) objects[i + objectCount]).join();
+            } catch (InterruptedException e) {
+                System.out.println("Error: " + e);
+            }
+        }
     }
 
     private static class DummyObject implements VirtualObject {
