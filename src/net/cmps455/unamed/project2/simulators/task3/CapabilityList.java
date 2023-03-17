@@ -1,13 +1,22 @@
 package net.cmps455.unamed.project2.simulators.task3;
 
-import java.util.Collection;
 import java.util.LinkedList;
 
 public class CapabilityList extends LinkedList<Capability> {
 
+    private final VirtualDomain domain;
+
+    public CapabilityList (VirtualDomain domain) {
+        this.domain = domain;
+    }
+
+    public int getDomainId() {
+        return this.domain.getID();
+    }
+
     @Override
     public boolean add(Capability capability) {
-        if (capability.permission.value == 0) return false;
+        if (capability == null || capability.flag == 0) return false;
         return super.add(capability);
     }
 
