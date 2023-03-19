@@ -1,4 +1,4 @@
-package net.cmps455.unamed.project2.simulators.task3;
+package net.cmps455.unamed.project2.api.system;
 
 public final class Capability {
 
@@ -52,6 +52,7 @@ public final class Capability {
     public static final int READ        = 0b0001;
     public static final int WRITE       = 0b0010;
     public static final int READ_WRITE  = 0b0011;
+
     public static final int SWITCH      = 0b0100;
 
     public static Capability create(VirtualObject object, int ... flags) {

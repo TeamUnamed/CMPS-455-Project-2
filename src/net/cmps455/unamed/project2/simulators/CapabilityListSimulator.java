@@ -1,7 +1,8 @@
 package net.cmps455.unamed.project2.simulators;
 
-import net.cmps455.unamed.project2.simulators.task3.VirtualObject;
-import net.cmps455.unamed.project2.simulators.task3.*;
+import net.cmps455.unamed.project2.api.system.*;
+import net.cmps455.unamed.project2.simulators.task3.DomainThread;
+import net.cmps455.unamed.project2.api.system.VirtualSystem;
 
 import java.util.Random;
 
