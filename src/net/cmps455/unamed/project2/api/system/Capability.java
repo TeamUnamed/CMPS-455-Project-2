@@ -14,9 +14,38 @@ public final class Capability {
         return (this.flag & flag) == flag;
     }
 
+    public Capability add(int ... flags) {
+        if (flags.length == 0) return this;
+
+        int flag = this.flag;
+        for (int f : flags) {
+            flag ^= f;
+        }
+
+        return new Capability(this.object, flag);
+    }
+
+    public Capability subtract(int ... flags) {
+        if (flags.length == 0) return this;
+
+        int flag = this.flag;
+        for (int f : flags) {
+            flag &= ~f;
+        }
+
+        return new Capability(this.object, flag);
+    }
+
     @Override
     public String toString() {
         return String.format("%s:%s", object, Integer.toString(flag,2));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Capability)) return false;
+
+        return this.object.equals(((Capability) obj).object);
     }
 
     public static final int NONE        = 0b0000;
