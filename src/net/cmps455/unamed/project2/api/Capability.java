@@ -1,4 +1,4 @@
-package net.cmps455.unamed.project2.api.system;
+package net.cmps455.unamed.project2.api;
 
 public final class Capability {
 
