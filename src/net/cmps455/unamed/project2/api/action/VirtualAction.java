@@ -7,8 +7,11 @@ import java.util.ArrayList;
  */
 public class VirtualAction {
 
-    private static int counter = 0;
-    private static final VirtualAction NONE = new VirtualAction("");
+    private static int counter = 1;
+    /**
+     * Empty Virtual Action
+     */
+    private static final VirtualAction NONE = new VirtualAction();
     private final int id;
     private final VirtualAction[] children;
     /** Name of the {@link VirtualAction} */
@@ -34,6 +37,10 @@ public class VirtualAction {
 
     /**
      * Constructor for VirtualAction with children.
+     * <p>
+     * If the child {@link VirtualAction#has has} this action
+     * or if the action is {@link VirtualAction#NONE empty} then
+     * it will not be added.
      * @param name name of action.
      * @param children array of children.
      * @see VirtualAction#VirtualAction(String)
@@ -57,8 +64,16 @@ public class VirtualAction {
     }
 
     /**
-     * Determines if this VirtualAction is equal to or possesses
-     * another virtual action.
+     * Determines if this VirtualAction is equal to or possesses another virtual action.
+     * <p>
+     * <i> Note: </i>
+     * <ul>
+     *   <li> Using '{@code .has(VirtualAction.NONE)}' is equivalent to using
+     *   '{@link VirtualAction#isEmpty() .isEmpty()}' </li>
+     *   <li> No action (besides the {@link VirtualAction#NONE empty} action) will contain the
+     *   {@link VirtualAction#NONE empty} action. </li>
+     * </ul>
+     * </p>
      * @param action the action to compare.
      * @return {@code true} if contains action; {@code false} otherwise.
      */
@@ -67,7 +82,8 @@ public class VirtualAction {
         if (action.equals(this))
             return true;
 
-        // This is not action, compare children
+        // This or the action is empty
+        if (isEmpty() || action.isEmpty()) return false;
 
         // No children, so this does not contain action
         if (children == null) {
@@ -82,6 +98,14 @@ public class VirtualAction {
         }
 
         return false;
+    }
+
+    /**
+     * Is this action the {@link VirtualAction#NONE empty} action.
+     * @return {@code true} if this is the empty action; {@code false} otherwise.
+     */
+    public boolean isEmpty() {
+        return id == 0;
     }
 
     @Override
