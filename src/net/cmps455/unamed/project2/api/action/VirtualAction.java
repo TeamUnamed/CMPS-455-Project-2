@@ -14,6 +14,12 @@ public class VirtualAction {
     /** Name of the {@link VirtualAction} */
     public final String name;
 
+    private VirtualAction() {
+        this.id = 0;
+        this.children = null;
+        this.name = "";
+    }
+
     /**
      * Constructor for VirtualAction without children.
      * @param name name of action.
