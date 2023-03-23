@@ -40,18 +40,19 @@ public class Main {
         }
         /* -------- */
 
-        Simulator simulator = null;
-        
         /* Simulation Index Checking */
-        switch (simulationIndex) {
-            case 1 -> System.out.println("TEMP -> STARTING SIMULATOR 1");
-            case 2 -> simulator = new AccessListSimulator();
-            case 3 -> simulator = new CapabilityListSimulator();
-            default -> { // return on invalid simulation
-                System.out.println("ERROR: Invalid Simulator (SIMULATION " + simulationIndex + ")");
-                return;
-            }
+        Simulator simulator = switch (simulationIndex) {
+            case 1 -> new AccessMatrixSimulator();
+            case 2 -> new AccessListSimulator();
+            case 3 -> new CapabilityListSimulator();
+            default -> null;
+        };
+
+        if (simulator == null) {
+            System.out.println("ERROR: Invalid Simulator (SIMULATION " + simulationIndex + ")");
+            return;
         }
+
         /* -------- */
 
         System.out.println("Simulator " + simulationIndex + " selected!");
