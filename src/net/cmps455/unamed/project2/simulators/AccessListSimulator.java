@@ -15,11 +15,9 @@ public class AccessListSimulator extends Simulator {
         Random random = new Random();
 
         // Randomly generating n (domain) and m (objects)
-        int n = random.nextInt((7-3)+1) + 3;
-        int m = random.nextInt((7-3)+1) + 3;
-        int accessListSize = m + n;
+        int domainCount = random.nextInt(5) + 3;
+        int objectCount = random.nextInt(5) + 3;
         int printIndex;
-        int domainIndex = m;
 
         // Variables to randomly populate the access list
         int readPop;
@@ -28,24 +26,24 @@ public class AccessListSimulator extends Simulator {
         LinkedList<String> pop = new LinkedList<>();
 
         //
-        String[][] object = new String[m][n];
-        String[][] domain = new String[n][n];
-        int[][] oIndex = new int[m][n];
-        int[][] dIndex = new int[n][n];
-        Semaphore[][] oLock = new Semaphore[m][n];
-        for(int i=0; i < m; i++){
-            for(int j=0; j < n; j++){
+        String[][] object = new String[objectCount][domainCount];
+        String[][] domain = new String[domainCount][domainCount];
+        int[][] oIndex = new int[objectCount][domainCount];
+        int[][] dIndex = new int[domainCount][domainCount];
+        Semaphore[][] oLock = new Semaphore[objectCount][domainCount];
+        for(int i=0; i < objectCount; i++){
+            for(int j=0; j < domainCount; j++){
                 oLock[i][j] = new Semaphore(1);
             }
         }
 
         // Access List Output
-        System.out.println("Domain Count: " + n);
-        System.out.println("Object Count: " + m);
-        for(int i = 1; i <= m; i++){
+        System.out.println("Domain Count: " + domainCount);
+        System.out.println("Object Count: " + objectCount);
+        for(int i = 1; i <= objectCount; i++){
             pop.clear();
             System.out.print("F" + i + " --> ");
-            for(int j = 0; j < n; j++){
+            for(int j = 0; j < domainCount; j++){
                 printIndex = j + 1;
                 readPop = random.nextInt(2);
                 writePop = random.nextInt(2);
@@ -69,7 +67,7 @@ public class AccessListSimulator extends Simulator {
                     object[i-1][j] = "null";
                 }
 
-                if(printIndex == n){
+                if(printIndex == domainCount){
                     if(pop.get(j).equals("null")){
                         continue;
                     }
@@ -87,10 +85,10 @@ public class AccessListSimulator extends Simulator {
             System.out.println();
         }
 
-        for(int i = 1; i <= n; i++){
+        for(int i = 1; i <= domainCount; i++){
             pop.clear();
             System.out.print("D" + i + " --> ");
-            for(int j = 0; j < n; j++){
+            for(int j = 0; j < domainCount; j++){
                 printIndex = j + 1;
                 switchPop = random.nextInt(2);
                 if(printIndex == i){
@@ -105,7 +103,7 @@ public class AccessListSimulator extends Simulator {
                     pop.add("null");
                     dIndex[i-1][j] = 0;
                 }
-                if(printIndex == n){
+                if(printIndex == domainCount){
                     if(pop.get(j).equals("null") || printIndex == i){
                         continue;
                     }
@@ -119,18 +117,33 @@ public class AccessListSimulator extends Simulator {
                 else{
                     System.out.print("D" + printIndex + ":" + pop.get(j) + ", ");
                 }
-                domainIndex++;
+                //domainIndex++;
             }
             System.out.println();
         }
 
         ExecutorService pool2 = Executors.newCachedThreadPool();
         for(int i=0; i < 6; i++){
-            pool2.execute(new AccessList(i, n, m, object, dIndex, oLock));
+            pool2.execute(new AccessList(i, domainCount, objectCount, object, dIndex, oLock));
             try{
                 Thread.sleep(500);
             } catch (Exception e){}
         }
         pool2.shutdown();
+    }
+
+    private static class AccessListb {
+
+        final LinkedList<AccessListEntry> list;
+
+        AccessListb() {
+            this.list = new LinkedList<>();
+        }
+
+
+    }
+
+    private static class AccessListEntry {
+
     }
 }

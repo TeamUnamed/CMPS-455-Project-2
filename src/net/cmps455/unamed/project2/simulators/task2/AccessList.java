@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 
-public class AccessList implements Runnable{
+public class AccessList implements Runnable {
 
     private int ID;
     private int domain;
@@ -13,25 +13,50 @@ public class AccessList implements Runnable{
     private int[][] domainList;
     private Semaphore[][] oLock;
 
-    public int getID(){return this.ID; }
-    public void setID(){this.ID = ID; }
+    public int getID() {
+        return this.ID;
+    }
+    public void setID() {
+        this.ID = ID;
+    }
 
-    public int getDomain(){return this.domain; }
-    public void setDomain(){this.domain = domain; }
+    public int getDomain() {
+        return this.domain;
+    }
+    public void setDomain(){
+        this.domain = domain;
+    }
 
-    public int getObject(){return this.object; }
-    public void setObject(){this.object = object; }
+    public int getObject() {
+        return this.object;
+    }
 
-    public String[][] getObjectList(){return this.objectList; }
-    public void setObjectList(){this.objectList = objectList; }
+    public void setObject() {
+        this.object = object;
+    }
 
-    public int[][] getDomainList(){return this.domainList; }
-    public void setDomainList(){this.domainList = domainList; }
+    public String[][] getObjectList() {
+        return this.objectList;
+    }
+    public void setObjectList(){
+        this.objectList = objectList;
+    }
 
-    public Semaphore[][] getoLock(){return this.oLock; }
-    public void setoLock(){this.oLock = oLock; }
+    public int[][] getDomainList(){
+        return this.domainList;
+    }
+    public void setDomainList() {
+        this.domainList = domainList;
+    }
 
-    public AccessList(int ID, int domain, int object, String[][] objectList, int[][] domainList, Semaphore[][] oLock){
+    public Semaphore[][] getoLock() {
+        return this.oLock;
+    }
+    public void setoLock(){
+        this.oLock = oLock;
+    }
+
+    public AccessList (int ID, int domain, int object, String[][] objectList, int[][] domainList, Semaphore[][] oLock) {
         this.ID = ID;
         this.domain = domain;
         this.object = object;
@@ -42,12 +67,9 @@ public class AccessList implements Runnable{
 
     public void run() {
         // Array for write to randomly pick from
-        char[] grade = new char[5];
-        grade[0] = 'A';
-        grade[1] = 'B';
-        grade[2] = 'C';
-        grade[3] = 'D';
-        grade[4] = 'F';
+        char[] grade = {
+          'A', 'B', 'C', 'D', 'F'
+        };
         int write;
 
         // Variables to track indices and semaphores
@@ -100,7 +122,8 @@ public class AccessList implements Runnable{
                 System.out.println("[Thread: " + ID + "(D" + domainNum + ")] Operation failed, permission denied");
             }
             // arbitration function = 1 then request attempting to write to a file
-        }else if (firstReq == 1) {
+
+        } else if (firstReq == 1) {
             write = random.nextInt(5);
             oPermission = random.nextInt(object - 1) + 1;
             System.out.println("Attempting to write resource: F" + oPermission + ".");
