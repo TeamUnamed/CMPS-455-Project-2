@@ -15,6 +15,7 @@ public class AccessMatrixSimulator extends Simulator {
         System.out.println("Domain count: " + domainCount);
         System.out.println("Object count: " + objectCount);
 
+        // Generate Access Matrix
         for (int i = 0; i < domainCount; i++) {
             for (int j = 0; j < objectCount; j++) {
                 accessMatrix[i][j] = switch(random.nextInt(4)) {
@@ -27,6 +28,30 @@ public class AccessMatrixSimulator extends Simulator {
             for (int j = 0; j < domainCount; j++) {
                 accessMatrix[i][objectCount + j] = (i == j) ? " " : (random.nextInt(2) == 1)? "A" : " ";
             }
+        }
+
+        // Print Access Matrix
+        System.out.print("    ");
+        for (int i = -1; i < domainCount; i++) {
+            if (i < 0) {
+                for (int j = 0; j < objectCount; j++) {
+                    System.out.printf(" F%d  ", j+1);
+                }
+                for (int j = 0; j < domainCount; j++) {
+                    System.out.printf(" D%d  ", j+1);
+                }
+                System.out.println();
+                continue;
+            }
+
+            System.out.printf("  D%d", i+1);
+            for (int j = 0; j < objectCount; j++) {
+                System.out.printf(" %-3s ", accessMatrix[i][j]);
+            }
+            for (int j = 0; j < domainCount; j++) {
+                System.out.printf(" %-3s ", accessMatrix[i][objectCount+j]);
+            }
+            System.out.println();
         }
 
 
