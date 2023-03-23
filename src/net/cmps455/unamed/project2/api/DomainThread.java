@@ -4,11 +4,18 @@ import java.util.Random;
 
 public class DomainThread extends Thread {
 
-    protected final int id;
+    private final int id;
     private final AccessManager accessManager;
     private final DomainManager domainManager;
     private final FileManager fileManager;
 
+    /**
+     * Constructor
+     * @param id id of the associated domain
+     * @param accessManager AccessManager
+     * @param domainManager DomainManager
+     * @param fileManager FileManager
+     */
     public DomainThread (int id, AccessManager accessManager, DomainManager domainManager, FileManager fileManager) {
         this.id = id;
         this.accessManager = accessManager;

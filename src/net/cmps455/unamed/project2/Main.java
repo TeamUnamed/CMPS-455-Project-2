@@ -7,6 +7,10 @@ import net.cmps455.unamed.project2.simulators.Simulator;
 
 public class Main {
 
+    /**
+     * Start here please
+     * @param args passed arguments...
+     */
     public static void main(String[] args) {
 
         /* Argument Checking */
