@@ -1,6 +1,7 @@
 package net.cmps455.unamed.project2;
 
 import net.cmps455.unamed.project2.simulators.AccessListSimulator;
+import net.cmps455.unamed.project2.simulators.AccessMatrixSimulator;
 import net.cmps455.unamed.project2.simulators.CapabilityListSimulator;
 import net.cmps455.unamed.project2.simulators.Simulator;
 
