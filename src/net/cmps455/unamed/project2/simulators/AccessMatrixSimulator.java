@@ -92,6 +92,7 @@ public class AccessMatrixSimulator extends Simulator {
                                 System.out.printf("[D%d] Resource F%d contains '%s'%n", id + 1, select, fileManager.read(select));
                             } finally {
                                 fileManager.close(select, FileManager.Access.READ);
+                                System.out.printf("[D%d] Operation Complete%n",id+1);
                             }
                         } else {
                             System.out.printf("[D%d] Operation failed, permission denied%n", id+1);
@@ -109,6 +110,7 @@ public class AccessMatrixSimulator extends Simulator {
                                 fileManager.write(select, data);
                             }finally{
                                 fileManager.close(select, FileManager.Access.WRITE);
+                                System.out.printf("[D%d] Operation Complete%n",id+1);
                             }
                         } else {
                             System.out.printf("[D%d] Operation failed, permission denied%n", id+1);
@@ -122,12 +124,12 @@ public class AccessMatrixSimulator extends Simulator {
                         yieldRandom(random);
 
                         domainManager.setContext(id, select - objectCount);
+
+                        System.out.printf("[D%d] Operation Complete%n",id+1);
                     } else {
                         System.out.printf("[D%d] Operation failed, permission denied%n", id+1);
                     }
                 }
-
-                System.out.printf("[D%d] Operation Complete%n",id+1);
             }
         }
 
