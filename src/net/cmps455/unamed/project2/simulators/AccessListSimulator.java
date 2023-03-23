@@ -1,4 +1,6 @@
-package com.company;
+package net.cmps455.unamed.project2.simulators;
+
+import net.cmps455.unamed.project2.simulators.task2.AccessList;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -6,11 +8,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-public class Main {
+public class AccessListSimulator extends Simulator {
 
-    public static void main(String[] args) {
-        // Randomly generating n (domain) and m (objects)
+    @Override
+    public void start() {
         Random random = new Random();
+
+        // Randomly generating n (domain) and m (objects)
         int n = random.nextInt((7-3)+1) + 3;
         int m = random.nextInt((7-3)+1) + 3;
         int accessListSize = m + n;
@@ -122,15 +126,11 @@ public class Main {
 
         ExecutorService pool2 = Executors.newCachedThreadPool();
         for(int i=0; i < 6; i++){
-            pool2.execute(new com.company.task2(i, n, m, object, dIndex, oLock));
+            pool2.execute(new AccessList(i, n, m, object, dIndex, oLock));
             try{
                 Thread.sleep(500);
             } catch (Exception e){}
         }
         pool2.shutdown();
-
-        System.out.println("No threads ready or runnable, and no pending interrupts.");
-        System.out.println("Assuming the program completed.");
-        System.out.println("Machine halting!");
     }
 }

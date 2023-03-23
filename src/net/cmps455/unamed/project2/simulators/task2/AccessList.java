@@ -1,10 +1,10 @@
-package com.company;
+package net.cmps455.unamed.project2.simulators.task2;
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 
-public class task2 implements Runnable{
+public class AccessList implements Runnable{
 
     private int ID;
     private int domain;
@@ -31,7 +31,7 @@ public class task2 implements Runnable{
     public Semaphore[][] getoLock(){return this.oLock; }
     public void setoLock(){this.oLock = oLock; }
 
-    task2(int ID, int domain, int object, String[][] objectList, int[][] domainList, Semaphore[][] oLock){
+    public AccessList(int ID, int domain, int object, String[][] objectList, int[][] domainList, Semaphore[][] oLock){
         this.ID = ID;
         this.domain = domain;
         this.object = object;

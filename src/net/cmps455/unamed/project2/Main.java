@@ -1,5 +1,6 @@
 package net.cmps455.unamed.project2;
 
+import net.cmps455.unamed.project2.simulators.AccessListSimulator;
 import net.cmps455.unamed.project2.simulators.CapabilityListSimulator;
 import net.cmps455.unamed.project2.simulators.Simulator;
 
@@ -44,7 +45,7 @@ public class Main {
         /* Simulation Index Checking */
         switch (simulationIndex) {
             case 1 -> System.out.println("TEMP -> STARTING SIMULATOR 1");
-            case 2 -> System.out.println("TEMP -> STARTING SIMULATOR 2");
+            case 2 -> simulator = new AccessListSimulator();
             case 3 -> simulator = new CapabilityListSimulator();
             default -> { // return on invalid simulation
                 System.out.println("ERROR: Invalid Simulator (SIMULATION " + simulationIndex + ")");
